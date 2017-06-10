@@ -26,6 +26,9 @@ const values = {
     htmlPage: true,
   },
 
+  // Database
+  databaseUrl: 'postgres://postgres:12211473@localhost:5432/test',
+
   // The host on which the server should run.
   host: EnvVars.string('HOST', '0.0.0.0'),
   // The port on which the server should run.

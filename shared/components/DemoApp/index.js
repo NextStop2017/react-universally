@@ -14,7 +14,9 @@ import Header from './Header';
 
 import AsyncHomeRoute from './AsyncHomeRoute';
 import AsyncCounterRoute from './AsyncCounterRoute';
-import AsyncAboutRoute from './AsyncAboutRoute';
+import TextEditor from './TextEditor';
+import LoginRoute from './Login';
+import RegisterRoute from './Register';
 
 function DemoApp() {
   return (
@@ -116,7 +118,9 @@ function DemoApp() {
         <Switch>
           <Route exact path="/" component={AsyncHomeRoute} />
           <Route path="/counter" component={AsyncCounterRoute} />
-          <Route path="/about" component={AsyncAboutRoute} />
+          <Route path="/newpost" component={TextEditor} />
+          <Route path="/login" component={LoginRoute} />
+          <Route path="/register" component={RegisterRoute} />
           <Route component={Error404} />
         </Switch>
       </div>
