@@ -5,33 +5,39 @@
 </p>
 
 ## Nextstop README
+Folder | Usage
+------------ | -------------
+[client](./client) | 唔使理住
+[server/index.js](./server/index.js)| node+express handle post/get request/response
+[server/middleware/passport.js](middleware/passport.js)| handles login
+[server/middleware/register.js](middleware/register.js) | handles registration
+[server/data/sequelize.js](data/sequelize.js)|connect postgres db
+[server/data/models](server/data/models) | sync 返個 schema 落 db
+[server/data/auth](server/data/auth) | pw hashing function
+[shared](./shared) | 所有同 react 有關嘅嘢 (shared by server+client side rendering)
+[shared/components/DemoApp](shared/components/DemoApp)| 每 page 一個 folder
+[shared/components/DemoApp/index.js](shared/components/DemoApp/index.js)|React Routing
+[shared/components/DemoApp/global.css](shared/components/DemoApp/global.css) |暫時得 global，遲啲要用sass modularize*
+[config](./config)| (sample usage: import config from '../../config'; var db = config('databaseUrl'); )
+[internal/webpack/configFactory.js](internal/webpack/configFactory.js)|webpack config 唔知點改
 
-```./client 唔使理住
-./server/index.js node+express handle post/get request/response
-  ./middleware/passport.js handles login
-  ./middleware/register.js handles registration
-  ./data/sequelize.js connect postgres db
-  ./data/models sync 返個 schema 落 db
-  ./data/auth pw hashing function
-./shared 所有同 react 有關嘅嘢 (shared by server+client side rendering)
-  ./components/DemoApp 每 page 一個 folder
-    ./index.js React Routing
-    ./global.css 暫時得 global，要用sass modularize*
-./config (sample usage: import config from '../../config'; var db = config('databaseUrl'); )
-./internal/webpack/configFactory.js webpack config 唔知點改
-```
 /* see https://www.jonathan-petitcolas.com/2015/05/15/howto-setup-webpack-on-es6-react-application-with-sass.html
 
 第一次要 setup postgres 
 
-```$ sudo -i -u postgres
+```
+$ sudo -i -u postgres
 $ psql
 =# CREATE DATABASE test;
 =# CREATE ROLE tester WITH LOGIN PASSWORD 'pw';
 =# GRANT ALL PRIVILEGES ON DATABASE test TO tester;
 ```
-去 ./config/values.js 改 databaseUrl: 'postgres://Login名:密碼@localhost:5432/table名',
-再去 ./server/data/models/index.js 同 Session.js uncomment 返句 sync()
+去 [config/values.js](./config/values.js) 改 databaseUrl: 
+```
+postgres://Login名:密碼@localhost:5432/table名
+```
+
+再去 [server/data/models/index.js](./server/data/models/index.js) 同 [Session.js](./server/data/models/Session.js) uncomment 返句 // sync()
 
 install node modules: 
 
