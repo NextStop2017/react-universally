@@ -1,23 +1,22 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
 
-const Session = Model.define('Session', {
-
+const Session = Model.define('session', {
   sid: {
     type: DataType.STRING(255),
     primaryKey: true,
   },
 
   sess: {
-    type: DataType.JSON,
+    type: DataType.STRING(255),
+    unique: true,
   },
-  
+
   expire: {
-    type: DataType.date(6),
+    type: DataType.DATE,
   },
-  
 });
 
-//Session.sync();
+Session.sync();
 
 export default Session;

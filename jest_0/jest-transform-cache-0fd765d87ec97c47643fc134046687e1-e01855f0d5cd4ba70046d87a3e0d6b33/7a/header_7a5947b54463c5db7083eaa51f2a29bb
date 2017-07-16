@@ -1,0 +1,38 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.Header = undefined;
+
+
+var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _reactBootstrap = require('react-bootstrap');
+var _reactRouterDom = require('react-router-dom');
+var _globals = require('./../globals.css');var _globals2 = _interopRequireDefault(_globals);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
+                                                                                                                                                                                           * Created by wongkaho on 18/6/2017.
+                                                                                                                                                                                           */const Header = exports.Header = () =>
+_react2.default.createElement('div', { id: 'carouselExampleIndicators', className: 'carousel slide', 'data-ride': 'carousel' },
+  _react2.default.createElement('ol', { className: 'carousel-indicators' },
+    _react2.default.createElement('li', { 'data-target': '#carouselExampleIndicators', 'data-slide-to': '0', className: 'active' }),
+    _react2.default.createElement('li', { 'data-target': '#carouselExampleIndicators', 'data-slide-to': '1' }),
+    _react2.default.createElement('li', { 'data-target': '#carouselExampleIndicators', 'data-slide-to': '2' })),
+
+  _react2.default.createElement('div', { className: 'carousel-inner', role: 'listbox' },
+    _react2.default.createElement('div', { className: 'carousel-item active' },
+      _react2.default.createElement('img', {
+        className: _globals2.default.carouselImg,
+        src: 'http://m.chanyouji.cn/index-cover/10295-298771.jpg' }),
+
+      _react2.default.createElement('div', { className: 'carousel-caption d-none d-md-block' },
+        _react2.default.createElement('h3', null, _react2.default.createElement(_reactRouterDom.NavLink, { className: _globals2.default.link, to: '/login' }, '\u95DC\u897F\u516D\u65E5\u884C')))),
+
+
+    _react2.default.createElement('div', { className: 'carousel-item' },
+      _react2.default.createElement('img', { className: _globals2.default.carouselImg, src: 'http://m.chanyouji.cn/index-cover/331-13837.jpg' }),
+      _react2.default.createElement('div', { className: 'carousel-caption d-none d-md-block' },
+        _react2.default.createElement('h3', null, _react2.default.createElement(_reactRouterDom.NavLink, { className: _globals2.default.link, to: '/login' }, '\u5317\u6B50\u661F\u7A7A\u4E4B\u65C5')))),
+
+
+    _react2.default.createElement('div', { className: 'carousel-item' },
+      _react2.default.createElement('img', {
+        className: _globals2.default.carouselImg,
+        src: 'http://m.chanyouji.cn/index-cover/27926-894425.jpg' }),
+
+      _react2.default.createElement('div', { className: 'carousel-caption d-none d-md-block' },
+        _react2.default.createElement('h3', null, _react2.default.createElement(_reactRouterDom.NavLink, { className: _globals2.default.link, to: '/login' }, '\u6771\u6B50\u5C0F\u93AE'))))));

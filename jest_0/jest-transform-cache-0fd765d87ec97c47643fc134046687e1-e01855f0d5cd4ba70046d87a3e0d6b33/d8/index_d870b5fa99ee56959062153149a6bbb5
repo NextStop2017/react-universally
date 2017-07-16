@@ -1,0 +1,26 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _propTypes = require('prop-types');var _propTypes2 = _interopRequireDefault(_propTypes);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+class Error404 extends _react.Component {
+  componentWillMount() {
+    const { staticContext } = this.props;
+    if (staticContext) {
+      staticContext.missed = true;
+    }
+  }
+
+  render() {
+    return _react2.default.createElement('div', null, 'Sorry, that page was not found.');
+  }}
+
+
+Error404.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  staticContext: _propTypes2.default.object };
+
+
+Error404.defaultProps = {
+  staticContext: {} };exports.default =
+
+
+Error404;

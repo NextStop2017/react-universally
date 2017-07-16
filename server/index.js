@@ -11,14 +11,12 @@ import serviceWorker from './middleware/serviceWorker';
 import offlinePage from './middleware/offlinePage';
 import errorHandlers from './middleware/errorHandlers';
 import config from '../config';
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 import pg from 'pg';
 import session from 'express-session';
 import passport from './middleware/passport';
 import register from './middleware/register';
-
-
 
 // Create our express based server.
 const app = express();
@@ -56,61 +54,67 @@ app.use(express.static(pathResolve(appRootDir.get(), config('publicAssetsPath'))
 // The React application middleware.
 app.get('*', reactApplication);
 
-//must use this instead of importing from config
+// must use this instead of importing from config
 var configurations = {
-  user: 'postgres',
+  user: 'dbadmin',
   database: 'test',
-  password: '12211473',
+  password: 'Nextstop!2017',
   port: 5432,
   max: 10, // max number of connection can be open to database
   idleTimeoutMillis: 30000,
 };
 
-
-//database pooling
+// database pooling
 var pool = new pg.Pool(configurations);
 var pgSession = require('connect-pg-simple')(session);
 
-//TODO: fix session problems
-app.use('/', session({
-  store: new pgSession({
-    pool : pool,                // Connection pool  // Use another table-name than the default "session" one
+// TODO: fix session problems
+app.use(
+  '/',
+  session({
+    store: new pgSession({
+      pool, // Connection pool  // Use another table-name than the default "session" one
+    }),
+    secret: 'this is the secret',
+    resave: false,
+    saveUninitialized: false,
+    expires: new Date(Date.now() + 3600000),
+    cookie: {
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      secure: true,
+    }, // 30 days
   }),
-  secret: 'this is the secret',
-  resave: false,
-  saveUninitialized: false,
-  expires : new Date(Date.now() + 3600000),
-  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000,
-            httpOnly:true,
-            secure: true} // 30 days
-}));
-
-app.use(passport.initialize());
-app.use(passport.session()); //passport piggy backs of express sessions, still need to set express session options
-
-
-/*TODO: login form alerts (i.e. wrong password), limit no. of requests for an ip
-per day*/
-app.post('/login', passport.authenticate('local', { //localStrategy only
-        session: true,
-        failureRedirect : '/login', // redirect back to the sign in page if there is an error
-        failureFlash : false // allow flash messages
-}), (req, res) => {
-    res.redirect('/');
-  },
-
 );
 
-//TODO: register form
-app.post('/register', register);
+app.use(passport.initialize());
+app.use(passport.session()); // passport piggy backs of express sessions, still need to set express session options
 
+/* TODO: login form alerts (i.e. wrong password), limit no. of requests for an ip
+per day*/
+app.post(
+  '/login',
+  passport.authenticate('local', {
+    // localStrategy only
+    session: true,
+    failureRedirect: '/', // redirect back to the sign in page if there is an error
+    failureFlash: false, // allow flash messages
+  }),
+  (req, res) => {
+    res.redirect('/');
+  },
+);
+
+// TODO: register form
+app.post('/register', register);
 
 // Error Handler middlewares.
 app.use(...errorHandlers);
 
 // Create an http listener for our express app.
 const listener = app.listen(config('port'), () =>
-  console.log(`Server listening on port ${config('port')}`));
+  console.log(`Server listening on port ${config('port')}`),
+);
 
 // We export the listener as it will be handy for our development hot reloader,
 // or for exposing a general extension layer for application customisations.

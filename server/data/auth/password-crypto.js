@@ -1,7 +1,5 @@
 /*  Code courtesy of Skeggse https://gist.github.com/skeggse/52672ddee97c8efec269 */
 
-'use strict'
-
 import validator from 'validator';
 import crypto from 'crypto';
 
@@ -16,11 +14,10 @@ var config = {
   // individual password, so larger is better. however, larger also means longer
   // to hash the password. tune so that hashing the password takes about a
   // second
-  iterations: 10000
+  iterations: 10000,
 };
 
-function PasswordCrypto () {
-
+function PasswordCrypto() {
   /**
    * Hash a password using Node's asynchronous pbkdf2 (key derivation) function.
    *
@@ -30,16 +27,14 @@ function PasswordCrypto () {
    * @param {!String} password
    * @param {!function(?Error, ?Buffer=)} callback
    */
-  this.hashPassword = function(password, callback) {
+  this.hashPassword = function (password, callback) {
     // generate a salt for pbkdf2
-    crypto.randomBytes(config.saltBytes, function(err, salt) {
+    crypto.randomBytes(config.saltBytes, (err, salt) => {
       if (err) {
         return callback(err);
       }
 
-      crypto.pbkdf2(password, salt, config.iterations, config.hashBytes, 'SHA256',
-        function(err, hash) {
-
+      crypto.pbkdf2(password, salt, config.iterations, config.hashBytes, 'SHA256', (err, hash) => {
         if (err) {
           return callback(err);
         }
@@ -59,7 +54,7 @@ function PasswordCrypto () {
         callback(null, combinedHex);
       });
     });
-  }
+  };
 
   /**
    * Verify a password using Node's asynchronous pbkdf2 (key derivation) function.
@@ -72,7 +67,7 @@ function PasswordCrypto () {
    *   hashPassword.
    * @param {!function(?Error, !boolean)}
    */
-  this.verifyPassword = function(password, combinedHex, callback) {
+  this.verifyPassword = function (password, combinedHex, callback) {
     // extract the salt and hash from the combined buffer
     var combined = new Buffer(combinedHex, 'hex');
     var saltBytes = combined.readUInt32BE(0);
@@ -82,15 +77,13 @@ function PasswordCrypto () {
     var hash = combined.toString('binary', saltBytes + 8);
 
     // verify the salt and hash against the password
-    crypto.pbkdf2(password, salt, iterations, hashBytes, 'SHA256',function(err, verify) {
-
+    crypto.pbkdf2(password, salt, iterations, hashBytes, 'SHA256', (err, verify) => {
       if (err) {
         return callback(err, false);
       }
       callback(null, verify.toString('binary') === hash);
     });
-  }
-
+  };
 }
 
 export default PasswordCrypto;

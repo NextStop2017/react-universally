@@ -12,18 +12,20 @@ import User from './User';
 import UserLogin from './UserLogin';
 import UserProfile from './UserProfile';
 import AuthProviders from './AuthProviders';
+import Session from './Session';
 
 User.hasMany(UserLogin, {
   foreignKey: 'id',
   as: 'logins',
+  sourceKey: 'User_ID',
   onUpdate: 'cascade',
   onDelete: 'cascade',
 });
 
-
 User.hasOne(UserProfile, {
-  foreignKey: 'id',
+  foreignKey: 'userId',
   as: 'profile',
+  sourceKey: 'User_ID',
   onUpdate: 'cascade',
   onDelete: 'cascade',
 });
@@ -35,12 +37,18 @@ User.belongsTo(AuthProviders, {
   onDelete: 'cascade',
 });
 
+Session.hasMany(UserLogin, {
+  foreignKey: 'Session_key',
+  as: 'key',
+  sourceKey: 'sess',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
 
-function sync(...args) {
-  return sequelize.sync(...args);
-}
+// function sync(...args) {
+//  return sequelize.sync(...args);
+// }
 // sync();
 
-
-export default { sync };
-export { User, UserLogin, UserProfile, AuthProviders};
+// export default { sync };
+export { User, UserLogin, UserProfile, AuthProviders, Session };

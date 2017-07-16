@@ -16,13 +16,13 @@ const sequelize = new Sequelize(db, {
     freezeTableName: true,
   },
 });
-sequelize.authenticate().then(() => {
+sequelize
+  .authenticate()
+  .then(() => {
     console.log('Connection has been established successfully.');
   })
-  .catch(err => {
+  .catch((err) => {
     console.error('Unable to connect to the database:', err);
   });
-
-
 
 export default sequelize;

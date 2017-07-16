@@ -7,10 +7,10 @@ import Helmet from 'react-helmet';
 
 import config from '../../../config';
 
-import './globals.css';
-
 import Error404 from './Error404';
 import Header from './Header';
+
+import './globals.css';
 
 import AsyncHomeRoute from './AsyncHomeRoute';
 import AsyncCounterRoute from './AsyncCounterRoute';
@@ -20,7 +20,7 @@ import RegisterRoute from './Register';
 
 function DemoApp() {
   return (
-    <div style={{ padding: '2rem' }}>
+    <div>
       <Helmet>
         <html lang="en" />
         <title>{config('htmlPage.defaultTitle')}</title>
@@ -32,14 +32,18 @@ function DemoApp() {
         <meta name="msapplication-TileColor" content="#2b2b2b" />
         <meta name="msapplication-TileImage" content="/favicons/mstile-144x144.png" />
         <meta name="theme-color" content="#2b2b2b" />
+        <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+        />
         {/*
-          A great reference for favicons:
-          https://github.com/audreyr/favicon-cheat-sheet
-          It's a pain to manage/generate them. I run both these in order,
-          and combine their results:
-          http://realfavicongenerator.net/
-          http://www.favicomatic.com/
-        */}
+         A great reference for favicons:
+         https://github.com/audreyr/favicon-cheat-sheet
+         It's a pain to manage/generate them. I run both these in order,
+         and combine their results:
+         http://realfavicongenerator.net/
+         http://www.favicomatic.com/
+         */}
         <link
           rel="apple-touch-icon-precomposed"
           sizes="152x152"
@@ -100,29 +104,36 @@ function DemoApp() {
         <link rel="manifest" href="/manifest.json" />
 
         {/*
-          NOTE: This is simply for quick and easy styling on the demo. Remove
-          this and the related items from the Content Security Policy in the
-          global config if you have no intention of using milligram.
-        */}
-        <link
-          rel="stylesheet"
-          href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"
-        />
-        <link
-          rel="stylesheet"
-          href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css"
-        />
+         NOTE: This is simply for quick and easy styling on the demo. Remove
+         this and the related items from the Content Security Policy in the
+         global config if you have no intention of using milligram.
+         */}
+        {
+          // <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css" />
+          // <script src="https://cdnjs.cloudflare.com/ajax/libs/react/<react-version>/react.min.js"></script>
+          // <script src="https://cdnjs.cloudflare.com/ajax/libs/react/<react-version>/react-dom.min.js"></script>
+          // <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/4.0.0-alpha.6/react-bootstrap.min.js"></script>
+        }
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" />
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" />
+        // <script src="https://fb.me/react-with-addons-0.14.3.js" />
+        // <script src="https://unpkg.com/react@0.14.3/dist/react-with-addons.js" />
       </Helmet>
       <Header />
-      <div style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
-        <Switch>
-          <Route exact path="/" component={AsyncHomeRoute} />
-          <Route path="/counter" component={AsyncCounterRoute} />
-          <Route path="/newpost" component={TextEditor} />
-          <Route path="/login" component={LoginRoute} />
-          <Route path="/register" component={RegisterRoute} />
-          <Route component={Error404} />
-        </Switch>
+      <div style={{ paddingTop: '40px' }}>
+        <div className="">
+          <Switch>
+            <Route exact path="/" component={AsyncHomeRoute} />
+            <Route path="/counter" component={AsyncCounterRoute} />
+            <Route path="/newpost" component={TextEditor} />
+            {/* <Route path="/login" component={LoginRoute} /> */}
+            <Route path="/register" component={RegisterRoute} />
+            <Route component={Error404} />
+          </Switch>
+          <LoginRoute />
+          <RegisterRoute />
+        </div>
       </div>
     </div>
   );

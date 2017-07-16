@@ -10,18 +10,37 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
 
-const UserLogin = Model.define('user_login', {
-
-  name: {
-    type: DataType.STRING(50),
+const UserLogin = Model.define('Login_Log', {
+  Login_Log_ID: {
+    type: DataType.INTEGER,
     primaryKey: true,
   },
 
-  key: {
+  Session_key: {
+    type: DataType.STRING(255),
+  },
+
+  Login_DateTime: {
+    type: DataType.DATE,
+  },
+
+  Login_IP: {
     type: DataType.STRING(100),
-    primaryKey: true,
   },
 
+  Login_OS: {
+    type: DataType.STRING(100),
+  },
+
+  Login_WebBrowser: {
+    type: DataType.STRING(2048),
+  },
+
+  id: {
+    type: DataType.UUID,
+  },
 });
+
+UserLogin.sync();
 
 export default UserLogin;

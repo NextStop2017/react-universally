@@ -14,52 +14,59 @@
  */
 
 import passport from 'passport';
-var LocalStrategy = require( 'passport-local' ).Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 import { User, UserLogin, UserProfile } from '../data/models';
 import PasswordCrypto from '../data/auth/password-crypto';
 
 // local login strategy
-passport.use(new LocalStrategy({
-  // by default, local strategy uses username and password, we will override with email
-  usernameField : 'username',
-  passwordField : 'password',
-  callbackURL: '/login',
-
-}, function(username, password, done) {
-var passwordCrypto = new PasswordCrypto();
-// var user = userRepo.getUserForEmail(username).then(result => {//TODO: user findOne
-  User.findOne({where: { email: username }, attributes: ['id','email', 'email_confirmed','password']})
-    .then(user => {
-      if (user.email_confirmed) {
-        return passwordCrypto.verifyPassword(password, user.password, function(err, isVerified) {
-          if(!err && isVerified){
-            done(null, user);
-          } else {
-            done(null, false, { message: 'Incorrect password.' });
-            console.log('Incorrect password.');
+passport.use(
+  new LocalStrategy(
+    {
+      // by default, local strategy uses username and password, we will override with email
+      usernameField: 'username',
+      passwordField: 'password',
+      callbackURL: '/',
+    },
+    (username, password, done) => {
+      var passwordCrypto = new PasswordCrypto();
+      // var user = userRepo.getUserForEmail(username).then(result => {//TODO: user findOne
+      User.findOne({
+        where: { email: username },
+        attributes: ['id', 'email', 'email_confirmed', 'password'],
+      })
+        .then((user) => {
+          if (user.email_confirmed) {
+            return passwordCrypto.verifyPassword(password, user.password, (err, isVerified) => {
+              if (!err && isVerified) {
+                done(null, user);
+              } else {
+                done(null, false, { message: 'Incorrect password.' });
+                console.log('Incorrect password.');
+              }
+            });
           }
+          done(null, false, { message: 'Email not confirmed' });
+          console.log('Email not confirmed');
+        })
+        .catch((err) => {
+          done(null, false, { message: 'No such user.' });
+          console.log('No such user.');
         });
-      }
-      else {
-        done(null, false, { message: 'Email not confirmed' });
-        console.log('Email not confirmed');
-      }
-  }).catch(err => {done(null, false, { message: 'No such user.' });
-  console.log('No such user.');
-  });
-}));
+    },
+  ),
+);
 
-
-
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
+passport.serializeUser((user, done) => {
+  done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-    User.loadOne({ _id: id }).then(function(user) {
-        done(null, user);
-    }).catch(function(err) {
-        done(err, null);
+passport.deserializeUser((id, done) => {
+  User.loadOne({ _id: id })
+    .then((user) => {
+      done(null, user);
+    })
+    .catch((err) => {
+      done(err, null);
     });
 });
 

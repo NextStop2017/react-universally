@@ -11,7 +11,6 @@ import DataType from 'sequelize';
 import Model from '../sequelize';
 
 const UserProfile = Model.define('user_profile', {
-
   userId: {
     type: DataType.UUID,
     primaryKey: true,
@@ -36,7 +35,8 @@ const UserProfile = Model.define('user_profile', {
   website: {
     type: DataType.STRING(255),
   },
-
 });
+
+UserProfile.sync();
 
 export default UserProfile;

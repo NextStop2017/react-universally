@@ -27,12 +27,12 @@ const values = {
   },
 
   // Database
-  databaseUrl: 'postgres://postgres:12211473@localhost:5432/test',
+  databaseUrl: 'postgres://dbadmin:Nextstop!2017@localhost:5432/test',
 
   // The host on which the server should run.
-  host: EnvVars.string('HOST', '0.0.0.0'),
+  host: EnvVars.string('HOST', '188.166.215.142'),
   // The port on which the server should run.
-  port: EnvVars.number('PORT', 1337),
+  port: EnvVars.number('PORT', 80),
 
   // The port on which the client bundle development server should run.
   clientDevServerPort: EnvVars.number('CLIENT_DEV_PORT', 7331),
@@ -94,11 +94,13 @@ const values = {
       // Allow scripts from cdn.polyfill.io so that we can import the
       // polyfill.
       'cdn.polyfill.io',
+      'code.jquery.com',
+      'cdnjs.cloudflare.com',
+      'maxcdn.bootstrapcdn.com',
+      'fb.me',
+      'unpkg.com',
     ],
-    styleSrc: [
-      'cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css',
-      'fonts.googleapis.com/css',
-    ],
+    styleSrc: ['maxcdn.bootstrapcdn.com'],
   },
 
   // Path to the public assets that will be served off the root of the

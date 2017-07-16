@@ -11,9 +11,8 @@
 var exec = require('child_process').exec;
 var existsSync = require('fs').existsSync;
 var pathResolve = require('path').resolve;
-
-if (existsSync(pathResolve(__dirname, '../../node_modules'))){
   // An install has already occurred.
+if (existsSync(pathResolve(__dirname, '../../node_modules'))){
   return;
 }
 
@@ -32,12 +31,12 @@ function checkNodeVersion() {
   }
 }
 
+  // The package has already been customised. Ignore this script.
 var packageJson = require('../../package.json');
 if (!packageJson.engines
   || !packageJson.engines.node
   || !packageJson.devDependencies
   || !packageJson.devDependencies.semver) {
-  // The package has already been customised. Ignore this script.
   return;
 }
 
